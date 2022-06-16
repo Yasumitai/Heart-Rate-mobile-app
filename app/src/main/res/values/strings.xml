@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Heart Rate</string>
+    <string name="title_activity_menu">Heart Rate</string>
+    <string name="title_home">Result</string>
+    <string name="title_dashboard">Measuring</string>
+    <string name="title_notifications">Info</string>
+    <string name="start_measuring">Start measuring</string>
+    <string name="how_to_use_this_app">How to use this app</string>
+    <string name="text">Before you start measuring make sure you are relaxed. Breathe deeply for 10-20 seconds, then press \'start measuring\' and place your finger on the camera in the next 5 seconds. After 30 seconds you\'ll see your result. A normal resting heart rate for adults ranges from 60 to 100 beats. A normal graph should look like that:</string>
+    <string name="text2">You can save your heart rate in the calendar to monitor your health.</string>
+</resources>
