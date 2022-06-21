@@ -13,8 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
 import com.example.pulse.databinding.FragmentResultsBinding
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.charts.ScatterChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
@@ -46,7 +48,7 @@ class ResultsFragment : Fragment() {
         val button: Button = binding.button2
         val textView: TextView = binding.textHome
         val stat: TextView = binding.textView5
-//        val scatterChart = binding.pchart
+        val scatterChart: ScatterChart = binding.pchart
         resultsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
@@ -69,32 +71,47 @@ class ResultsFragment : Fragment() {
 
         var sum = 0.0F
 
-        val scatterEntries = ArrayList<BarEntry>()
+        val scatterEntries: ArrayList<BarEntry> = ArrayList()
 
         for (i in (0..(arr.size-2))) {
             sum += (arr[i] - arr[i + 1]).pow(2)
             scatterEntries.add(BarEntry(arr[i], arr[i+1]))
         }
 
-        val n: Float = sum/((arr.size-2).toFloat())
+        val n: Float = sum/((arr.size).toFloat())
         val rmssd: Float = sqrt(n)
         stat.text = "RMSSD: $rmssd"
 
-        bpm.text = "${parsedArr.size} bpm"
+        bpm.text = "${parsedArr.size*2} bpm"
 
-//        val scatterDataSet = ScatterDataSet(scatterEntries as List<Entry>?, "")
-//        val scatterData = ScatterData(scatterDataSet)
-//        scatterChart.data = scatterData
-//        scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE)
-//        scatterDataSet.color = Color.RED
-//        scatterDataSet.setDrawValues(false)
-//        scatterDataSet.valueTextSize = 18f
-//        scatterChart.legend.isEnabled = false
-//        scatterChart.description.isEnabled = false
-//        scatterChart.setTouchEnabled(false)
-//        scatterChart.setScaleEnabled(false)
-//        scatterChart.setPinchZoom(false)
-//        scatterChart.isDragEnabled = false
+        val scatterDataSet = ScatterDataSet(scatterEntries as List<Entry>?, "")
+        val scatterData = ScatterData(scatterDataSet)
+        scatterChart.data = scatterData
+        scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE)
+        scatterDataSet.color = Color.RED
+        scatterDataSet.valueTextSize = 18f
+        scatterChart.legend.isEnabled = false
+        scatterChart.description.isEnabled = false
+        scatterChart.setTouchEnabled(false)
+        scatterChart.setScaleEnabled(false)
+        scatterChart.setPinchZoom(false)
+        scatterChart.isDragEnabled = false
+
+        scatterChart.axisRight.isEnabled = false
+
+        val yAxis: YAxis = scatterChart.axisLeft
+        val xAxis: XAxis = scatterChart.xAxis
+
+        xAxis.setDrawLabels(false)
+        yAxis.setDrawLabels(false)
+
+        yAxis.setAxisMaxValue(1000F)
+        yAxis.setAxisMinValue(500F)
+        xAxis.setAxisMaxValue(1000F)
+        xAxis.setAxisMinValue(500F)
+
+        scatterDataSet.setDrawValues(false)
+
 
         button.setOnClickListener{
             val cal = Calendar.getInstance();
@@ -104,7 +121,7 @@ class ResultsFragment : Fragment() {
             intent.putExtra("allDay", true);
             intent.putExtra("rrule", "FREQ=YEARLY");
             intent.putExtra("endTime", cal.timeInMillis +60*60*1000);
-            intent.putExtra("title", "Pulse: ${parsedArr.size}");
+            intent.putExtra("title", "Pulse: ${parsedArr.size*2}");
             startActivity(intent)
         }
 

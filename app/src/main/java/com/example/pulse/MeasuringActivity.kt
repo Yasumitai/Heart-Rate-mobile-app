@@ -201,12 +201,13 @@ class MainActivity : AppCompatActivity() {
         val xAxis: XAxis = lineChart.xAxis
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
+        xAxis.setDrawLabels(false)
         xAxis.setAvoidFirstLastClipping(true)
         //remove right y-axis
         val yAxis: YAxis = lineChart.axisLeft
+        yAxis.setDrawLabels(false)
         yAxis.spaceTop = 10.0F
         yAxis.spaceBottom = 10.0F
-        yAxis.setDrawLabels(true)
 
 
         lineChart.axisRight.isEnabled = false
@@ -220,7 +221,6 @@ class MainActivity : AppCompatActivity() {
 
         // to draw label on xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
-        xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
         xAxis.labelRotationAngle = +90f
 
