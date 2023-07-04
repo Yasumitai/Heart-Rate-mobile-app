@@ -1,2 +1,2 @@
 # Heart-Rate-mobile-app
-A mobile app to measure heart rate via camera
+Приложение для измерения пульса с помощью катемы смартфона
